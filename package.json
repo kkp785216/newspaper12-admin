@@ -2,22 +2,35 @@
   "name": "my-app-typescript",
   "version": "0.1.0",
   "private": true,
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --no-cache --max-warnings=3",
+      "prettier --write"
+    ]
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@next/font": "13.1.6",
+    "next": "13.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
     "@types/node": "18.11.19",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
-    "next": "13.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "prettier": "2.8.7",
     "typescript": "4.9.5"
   }
 }
