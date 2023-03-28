@@ -1,9 +1,12 @@
 import Head from "next/head";
+import { useAppSelector } from "redux/hooks";
 
 //using google font
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { auth } = useAppSelector((state) => state);
+  console.log(auth);
   return (
     <>
       <Head>
