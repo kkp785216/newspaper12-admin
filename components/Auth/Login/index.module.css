@@ -1,0 +1,19 @@
+.checkbox {
+  position: relative;
+  content: "";
+}
+.checkbox:checked:before {
+  position: absolute;
+  top: 2px;
+  left: -4px;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  margin: auto;
+  content: "";
+  background: url(./assets/rightIcon.svg), no-repeat center center / cover;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+}

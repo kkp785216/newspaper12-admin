@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import Sidebar from "./SideBar";
 import { getNavbarHeight } from "./Navbar";
 import { useAppSelector } from "redux/hooks";
-import LoginScreen from "components/Auth/login";
+import LoginScreen from "components/Auth/Login";
 
 type Props = {
   children: React.ReactNode;
