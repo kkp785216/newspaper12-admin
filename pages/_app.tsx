@@ -3,7 +3,7 @@ import "styles/utility.css";
 import type { AppProps } from "next/app";
 import { wrapper } from "redux/store";
 import { Provider } from "react-redux";
-import { setAuth } from "redux/auth/authSlice";
+import { setAuth } from "redux/auth/slice";
 import PresistComponents from "components/PresistComponents";
 import { useEffect } from "react";
 

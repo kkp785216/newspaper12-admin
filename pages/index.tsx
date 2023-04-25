@@ -1,14 +1,10 @@
 import Dashboard from "@pagesComps/Dashboard";
 import Head from "next/head";
-import { useAppSelector } from "redux/hooks";
 
 //using google font
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { auth } = useAppSelector((state) => state);
-  // eslint-disable-next-line no-console
-  console.log(auth);
   return (
     <>
       <Head>

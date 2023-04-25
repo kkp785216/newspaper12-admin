@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Header from "./Navbar";
-import Footer from "./Footer";
-import Sidebar from "./SideBar";
-import { getNavbarHeight } from "./Navbar";
+import Header from "./Subcomponents/Navbar";
+import Footer from "./Subcomponents/Footer";
+import Sidebar from "./Subcomponents/SideBar";
 import { useAppSelector } from "redux/hooks";
 import LoginScreen from "components/Auth/Login";
+import useSelectNavbarHeight from "./hooks/useSelectNavbarHeight";
 
 type Props = {
   children: React.ReactNode;
@@ -12,26 +11,8 @@ type Props = {
 
 const PresistComponents = ({ children }: Props) => {
   const { accessToken } = useAppSelector((state) => state.auth);
+  const { styleMain } = useSelectNavbarHeight();
 
-  const [styleMain, setStyleMain] = useState({
-    minHeight: "calc(100vh - 0px)",
-    width: "calc(100% - 180px)",
-  });
-
-  useEffect(() => {
-    updateMinHeight();
-    window.addEventListener("resize", updateMinHeight);
-    return () => window.removeEventListener("resize", updateMinHeight);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getNavbarHeight()]);
-
-  /**
-   * @returns main min-height style -> (100vh - navbar height)px
-   */
-  function updateMinHeight() {
-    const minHeight = `calc(100vh - ${getNavbarHeight()}px)`;
-    setStyleMain({ ...styleMain, minHeight });
-  }
   return (
     <>
       {accessToken ? (
