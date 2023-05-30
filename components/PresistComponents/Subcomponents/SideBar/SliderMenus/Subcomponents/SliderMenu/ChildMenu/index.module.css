@@ -1,0 +1,29 @@
+.child {
+  font-size: 13px;
+  color: var(--svg-primary);
+}
+
+.child.active {
+  font-size: 13px;
+  font-weight: 600;
+  color: inherit;
+}
+
+.child::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background-color: inherit;
+  transition: background-color 120ms ease-in;
+}
+
+.child:hover::before {
+  background-color: var(--color-active2);
+}
+
+.child.active:hover::before {
+  background-color: var(--color-primary);
+}

@@ -1,0 +1,87 @@
+/* Styling Menu */
+.menu {
+  color: inherit;
+  transition: color 50ms ease;
+  background-color: inherit;
+}
+
+.menu.active {
+  background-color: var(--color-active);
+}
+
+.menu:hover {
+  color: var(--color-active2);
+}
+
+.menu.active:hover {
+  color: inherit;
+}
+
+.menu::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background-color: inherit;
+  transition: background-color 120ms ease-in;
+}
+
+.menu:hover::before {
+  background-color: var(--color-active2);
+}
+
+.menu.active:hover::before {
+  background-color: var(--color-primary);
+}
+
+.menu::after {
+  right: 0;
+  border: solid 8px transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-right-color: var(--bg-primary);
+  top: 50%;
+  margin-top: -8px;
+}
+
+.menu.active::after {
+  border-right-color: var(--bg-secondary);
+}
+
+.container:hover .menu.haveChild::after {
+  border-right-color: var(--bg-shadow);
+}
+
+.container:hover .menu.active.haveChild::after {
+  border-right-color: var(--bg-secondary);
+}
+
+/* Styling Child Container */
+.childContainer {
+  width: 180px;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: var(--bg-shadow);
+  padding: 7px;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.childContainer.active {
+  position: static;
+  opacity: 1;
+  visibility: visible;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.container:hover .childContainer {
+  opacity: 1;
+  visibility: visible;
+}

@@ -1,0 +1,11 @@
+.btn {
+    background-color: var(--color-active3);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background-color: var(--color-active);
+}
