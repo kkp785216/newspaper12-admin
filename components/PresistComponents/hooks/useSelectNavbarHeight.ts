@@ -5,7 +5,7 @@ const useSelectNavbarHeight = () => {
   const navbarHeight = useAppSelector(getNavbarHeight);
   const styleMain = {
     minHeight: `calc(100vh - ${navbarHeight}px)`,
-    width: "calc(100% - 180px)",
+    width: "calc(100% - 160px)",
   };
   return { styleMain };
 };

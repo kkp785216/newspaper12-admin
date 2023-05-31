@@ -7,7 +7,7 @@
       "eslint --no-cache --max-warnings=3",
       "prettier --write"
     ],
-    "*.module.css": "prettier --write --ignore-unknown"
+    "*.module.css": "prettier --write"
   },
   "scripts": {
     "dev": "env-cmd -f environments/dev.env next dev",

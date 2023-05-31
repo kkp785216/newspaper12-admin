@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllArticlesData } from "./pageData";
 
 const AllPosts = async () => {
@@ -5,10 +6,12 @@ const AllPosts = async () => {
   return (
     <div>
       {articles.map((e) => (
-        <span key={e.url}>
-          {e.title}
+        <>
+          <Link key={e.url} href={`/posts/add-new`}>
+            {e.title}
+          </Link>
           <br />
-        </span>
+        </>
       ))}
     </div>
   );

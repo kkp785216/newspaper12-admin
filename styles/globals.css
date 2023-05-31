@@ -8,6 +8,8 @@
       --bg-secondary: #f0f0f1;
       --bg-shadow: #2c3338;
       --bg-normally: #ffffff;
+      --bg-lite: #f6f7f7;
+      --bg-btnhover: #f0f0f1;
 
       --color-primary: #f0f0f1;
       --color-secondary: #2c3338;
@@ -19,6 +21,7 @@
       --color-dim: #50575e;
       --color-normally: #000000;
       --color-form-caption: #646970;
+      --color-input: #8c8f94;
 
       --svg-primary: #f0f6fcb3;
 
@@ -27,5 +30,6 @@
       --border-disable: #dcdcde;
       --border-hover: #0a4b78;
       --border-dim: #c3c4c7;
+      --border-focus: #3582c4;
   }
 }
