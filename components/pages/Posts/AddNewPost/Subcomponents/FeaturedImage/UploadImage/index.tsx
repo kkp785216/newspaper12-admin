@@ -3,7 +3,6 @@
 import React, { useState, ChangeEvent } from "react";
 import { adminClient } from "@/network/adminHttpClient";
 import { toast } from "react-toastify";
-import { ToastSuccessMessage } from "@/components/Utils/ToastMessage";
 
 function ImageUploader() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
