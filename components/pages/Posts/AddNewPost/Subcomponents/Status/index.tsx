@@ -7,7 +7,7 @@ const Status = () => {
     <div>
       <CardWrapper>
         <Head heading="Publish" />
-        <Body></Body>
+        <Body>Publish</Body>
         <Footer>
           <MyButton btntype="fill" className="ml-auto block">
             Publish
