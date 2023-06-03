@@ -1,6 +1,10 @@
+import Author from "./Subcomponents/Author";
 import Category from "./Subcomponents/Category";
+import FeaturedImage from "./Subcomponents/FeaturedImage";
 import Heading from "./Subcomponents/Heading";
 import Status from "./Subcomponents/Status";
+import Tag from "./Subcomponents/Tag";
+import Template from "./Subcomponents/Template";
 import Title from "./Subcomponents/Title";
 import { Aside, Main, Wrapper } from "./Wrapper";
 import { Provider } from "./_context/Provider";
@@ -16,6 +20,10 @@ const AddNewPost = () => {
         <Aside>
           <Status />
           <Category />
+          <Tag />
+          <FeaturedImage />
+          <Author />
+          <Template />
         </Aside>
       </Wrapper>
     </Provider>
