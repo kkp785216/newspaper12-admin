@@ -8,6 +8,7 @@ export const metadata = {
 const Posts = () => {
   return (
     <div>
+      {/* @ts-expect-error Server Component */}
       <AllPosts />
     </div>
   );

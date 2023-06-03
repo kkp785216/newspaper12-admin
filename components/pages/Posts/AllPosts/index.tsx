@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { getAllArticlesData } from "./pageData";
-import { use } from "react";
 
-const AllPosts = () => {
-  const { articles } = use(getAllArticlesData());
+const AllPosts = async () => {
+  const { articles } = await getAllArticlesData();
   return (
     <div>
       {articles.map((e) => (
