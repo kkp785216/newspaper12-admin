@@ -1,14 +1,17 @@
 import React from "react";
 import { CardWrapper, Body, Footer, Head } from "../Subcomponents/CardLayout";
+import MyButton from "@/components/Utils/MyButton";
 
 const Status = () => {
   return (
     <div>
       <CardWrapper>
         <Head heading="Publish" />
-        <Body></Body>
+        <Body>Publish</Body>
         <Footer>
-          <button className="btn ml-auto block">Publish</button>
+          <MyButton btntype="fill" className="ml-auto block">
+            Publish
+          </MyButton>
         </Footer>
       </CardWrapper>
     </div>

@@ -1,79 +1,74 @@
-type Options = {
-  baseURL: string;
-};
+import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from "axios";
 
-class PublicHttpClient {
-  private baseURL: string;
+/* All of the below requests will return either the expected response, which can 
+be passed in via Generic Type, or throw an error with the contents being the error 
+message obtained from server.
+Benefits: 
+* No optional typing for the response data. You get what you ask for
+* The errors can be handled in dedicated catch blocks, where you know the parameter is a string.
+*/
+class PublicClient {
+  private readonly axiosInstance: AxiosInstance;
 
-  constructor(options: Options) {
-    this.baseURL = options.baseURL;
+  constructor(options: AxiosRequestConfig) {
+    this.axiosInstance = axios.create(options);
   }
 
-  async get<T>(url: string) {
+  /**
+   * This Method can be Used to Perform a get request to public apis.
+   * @param url
+   * @param params
+   * @returns
+   */
+  async get<T = unknown>(url: string, params?: Record<string, string>) {
     try {
-      const res = await fetch(this.baseURL + url);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const data: T = await res.json();
-      return data;
+      const response = await this.axiosInstance.get<T>(url, { params });
+      return response.data;
     } catch (error) {
-      throw new Error("Error Occured While Network Call.");
+      throw this.errorHandler(error);
     }
   }
 
-  async post<T>(url: string, params?: object) {
+  async post<T = unknown>(
+    url: string,
+    data?: object,
+    config?: AxiosRequestConfig
+  ) {
     try {
-      const res = await fetch(this.baseURL + url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: params ? JSON.stringify(params) : undefined,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const data: T = await res.json();
-      return data;
+      const response = await this.axiosInstance.post<T>(url, data, config);
+      return response.data;
     } catch (error) {
-      throw new Error("Error Occured While Network Call.");
+      throw this.errorHandler(error);
     }
   }
 
-  async put<T>(url: string, params?: object) {
+  put<T = unknown>(url: string, data?: object) {
     try {
-      const res = await fetch(this.baseURL + url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: params ? JSON.stringify(params) : undefined,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const data: T = await res.json();
-      return data;
+      return this.axiosInstance.put<T>(url, data);
     } catch (error) {
-      throw new Error("Error Occured While Network Call.");
+      throw this.errorHandler(error);
     }
   }
 
-  async delete<T>(url: string, params?: object) {
+  delete<T = unknown>(url: string, data?: object) {
     try {
-      const res = await fetch(this.baseURL + url, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: params ? JSON.stringify(params) : undefined,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const data: T = await res.json();
-      return data;
+      return this.axiosInstance.delete<T>(url, data);
     } catch (error) {
-      throw new Error("Error Occured While Network Call.");
+      throw this.errorHandler(error);
     }
+  }
+
+  private errorHandler(error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return error.message;
+    }
+    return "Error Occured While Network Call.";
   }
 }
 
-const publicHttpClient = new PublicHttpClient({
-  baseURL: process.env.NEXT_PUBLIC_UNPROTECTED_API_BASE_PATH || "",
+const publicClient = new PublicClient({
+  baseURL: process.env.NEXT_PUBLIC_UNPROTECTED_API_BASE_PATH,
 });
 
-export { publicHttpClient };
+export { publicClient };
