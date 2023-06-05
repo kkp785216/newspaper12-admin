@@ -1,15 +1,16 @@
+import { InputHTMLAttributes } from "react";
 import styles from "./index.module.css";
 
-const CheckBox = ({
-  label,
-  className,
-}: {
+type Props = {
   label: string;
   className?: string;
-}) => {
+} & InputHTMLAttributes<HTMLInputElement>;
+
+const CheckBox = ({ label, className, ...props }: Props) => {
   return (
     <label className={`${styles.label} ${className || ""}`}>
-      <input value="1" type="checkbox" className={styles.input} /> {label}
+      <input value="1" type="checkbox" className={styles.input} {...props} />{" "}
+      {label}
     </label>
   );
 };

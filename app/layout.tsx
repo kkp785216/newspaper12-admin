@@ -1,9 +1,9 @@
 import "@/styles/globals.css";
 import "@/styles/utility.css";
 import "react-toastify/dist/ReactToastify.css";
-import Provider from "@/redux/provider";
 import PresistComponents from "@/components/PresistComponents";
 import { ToastContainer } from "react-toastify";
+import AutoLogin from "@/redux/autologin";
 
 // import { Inter } from 'next/font/google'
 // const inter = Inter({ subsets: ['latin'] })
@@ -22,10 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Provider>
+        {/* @ts-expect-error Server Component */}
+        <AutoLogin>
           <PresistComponents>{children}</PresistComponents>
           <ToastContainer autoClose={2000} />
-        </Provider>
+        </AutoLogin>
       </body>
     </html>
   );

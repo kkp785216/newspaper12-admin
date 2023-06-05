@@ -1,62 +1,104 @@
-import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import api_endpoints from "@/lib/ApiEndpoints";
+import { ApiErrorType, WithNonNullableKeys } from "@/types/Common_APIs_Types";
+import { ImageResponse } from "@/types/Image_APIs_Types";
+import type {
+  AxiosError,
+  AxiosHeaders,
+  AxiosInstance,
+  AxiosRequestConfig,
+} from "axios";
 import axios from "axios";
 
-/* All of the below requests will return either the expected response, which can 
-be passed in via Generic Type, or throw an error with the contents being the error 
-message obtained from server.
-Benefits: 
-* No optional typing for the response data. You get what you ask for
-* The errors can be handled in dedicated catch blocks, where you know the parameter is a string.
-*/
+type AxiosRequestConfigWithAttemptCount = AxiosRequestConfig & {
+  _attemptsBeforeThisRequest?: number;
+};
+const MAX_TRIES = 3;
+const INVALID_ACCESS_TOKEN_ERROR_CODE = "ESEC0003";
+
 class AdminClient {
   private readonly axiosInstance: AxiosInstance;
+  public accessToken?: string;
 
-  constructor(options: AxiosRequestConfig) {
-    this.axiosInstance = axios.create(options);
+  constructor() {
+    this.axiosInstance = axios.create({
+      baseURL: process.env.NEXT_PUBLIC_ADMIN_API_BASE_PATH,
+    });
+    this.setupAuthHeaders();
+    this.setupAccessRefreshOnExpiry();
+  }
+
+  private setupAuthHeaders() {
+    this.axiosInstance.interceptors.request.use((config) => {
+      if (config.headers && this.accessToken)
+        // this will not run on startup
+        (config.headers as AxiosHeaders).set(
+          "Authorization",
+          `Bearer ${this.accessToken}`
+        );
+      return config;
+    });
+  }
+
+  private setupAccessRefreshOnExpiry() {
+    this.axiosInstance.interceptors.response.use(undefined, async (error) => {
+      if (!getIsStandardError(error)) return Promise.reject(error);
+
+      const isAccessTokenExpired =
+        error.response.data.errorCode === INVALID_ACCESS_TOKEN_ERROR_CODE;
+      const currAttemptCount = getCurrAttemptCount(error.config);
+      const isMaxTriesExceeded = MAX_TRIES <= currAttemptCount;
+      if (!isAccessTokenExpired || isMaxTriesExceeded)
+        return Promise.reject(error);
+
+      const oldHeaders = (
+        error.config.headers as unknown as AxiosHeaders
+      ).toJSON(); // This is currently a bug in axios library typings. The toJSON method returns a JS object.
+      const newConfig: AxiosRequestConfigWithAttemptCount = {
+        ...error.config,
+        headers: oldHeaders,
+        _attemptsBeforeThisRequest: currAttemptCount,
+      };
+      return this.axiosInstance(newConfig);
+    });
   }
 
   /**
-   * This Method can be Used to Perform a get request to public apis.
-   * @param url
-   * @param params
-   * @returns
+   * This is the error wrapper, that should be used by all the public class methods
    */
-  async get<T = unknown>(url: string, params?: Record<string, string>) {
+  private callBackend<ResultType>(config: AxiosRequestConfig) {
     try {
-      const response = await this.axiosInstance.get<T>(url, { params });
-      return response.data;
-    } catch (error) {
-      throw this.errorHandler(error);
+      return this.axiosInstance<ResultType>(config);
+    } catch (err) {
+      throw this.errorHandler(err);
     }
   }
 
-  async post<T = unknown>(
-    url: string,
-    data?: object,
-    config?: AxiosRequestConfig
-  ) {
-    try {
-      const response = await this.axiosInstance.post<T>(url, data, config);
-      return response.data;
-    } catch (error) {
-      throw this.errorHandler(error);
-    }
+  /**
+   * @returns image response with success message and download url
+   */
+  public async uploadImage(formData: FormData) {
+    const endpoint = api_endpoints.UPLOAD_IMAGE;
+    const url = `${endpoint}`;
+    const response = await this.callBackend<ImageResponse>({
+      url,
+      method: "POST",
+      data: formData,
+    });
+    return response.data;
   }
 
-  put<T = unknown>(url: string, data?: object) {
-    try {
-      return this.axiosInstance.put<T>(url, data);
-    } catch (error) {
-      throw this.errorHandler(error);
-    }
-  }
-
-  delete<T = unknown>(url: string, data?: object) {
-    try {
-      return this.axiosInstance.delete<T>(url, data);
-    } catch (error) {
-      throw this.errorHandler(error);
-    }
+  /**
+   * @returns image response with success message and download url
+   */
+  public async uploadImages(formData: FormData) {
+    const endpoint = api_endpoints.UPLOAD_IMAGES;
+    const url = `${endpoint}`;
+    const response = await this.callBackend<ImageResponse[]>({
+      url,
+      method: "POST",
+      data: formData,
+    });
+    return response.data;
   }
 
   private errorHandler(error: unknown) {
@@ -67,8 +109,21 @@ class AdminClient {
   }
 }
 
-const adminClient = new AdminClient({
-  baseURL: process.env.NEXT_PUBLIC_ADMIN_API_BASE_PATH,
-});
+function getIsStandardError(
+  err: unknown
+): err is WithNonNullableKeys<AxiosError<ApiErrorType>, "response" | "config"> {
+  return Boolean(axios.isAxiosError(err) && err.response && err.config);
+}
+
+/**
+ * The _attemptCount key tells us how many attempts were run prior the the given request
+ */
+function getCurrAttemptCount(config: AxiosRequestConfigWithAttemptCount) {
+  const oldCount = config._attemptsBeforeThisRequest;
+  const newCount = oldCount ? oldCount + 1 : 1;
+  return newCount;
+}
+
+const adminClient = new AdminClient();
 
 export { adminClient };

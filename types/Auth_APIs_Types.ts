@@ -12,4 +12,11 @@ type UserProfileResponse = {
   role: "user" | "admin";
 };
 
-export type { LoginRequestBody, UserProfileResponse };
+type LoginResponse = {
+  profile: UserProfileResponse;
+  token: string;
+  refreshToken: string;
+  expiry: number;
+};
+
+export type { LoginRequestBody, UserProfileResponse, LoginResponse };
