@@ -2,8 +2,10 @@
 
 import React, { useState, ChangeEvent } from "react";
 import { adminClient } from "@/network/adminHttpClient";
-import { toast } from "react-toastify";
-import { ToastSuccessMessage } from "@/components/Utils/ToastMessage";
+import {
+  ToastDangerMessage,
+  ToastSuccessMessage,
+} from "@/components/Utils/ToastMessage";
 
 function ImageUploaders() {
   const [selectedImages, setSelectedImages] = useState<FileList | null>(null);
@@ -14,24 +16,21 @@ function ImageUploaders() {
   };
 
   const handleImageUpload = () => {
-    ToastSuccessMessage("hello");
-    if (selectedImages) {
-      const formData = new FormData();
-      for (let i = 0; i < selectedImages.length; i++) {
-        formData.append("image", selectedImages[i]);
-      }
+    void (async () => {
+      if (selectedImages) {
+        const formData = new FormData();
+        for (let i = 0; i < selectedImages.length; i++) {
+          formData.append("image", selectedImages[i]);
+        }
 
-      adminClient
-        .post("/upload/images", formData)
-        .then(() => {
-          // Handle successful upload
-          toast("Image successfully uploaded");
-        })
-        .catch(() => {
-          // Handle upload error
-          toast("Image upload faild", { type: "error" });
-        });
-    }
+        try {
+          await adminClient.uploadImages(formData);
+          ToastSuccessMessage("Image successfully uploaded");
+        } catch (error) {
+          ToastDangerMessage("Image upload faild");
+        }
+      }
+    })();
   };
 
   return (

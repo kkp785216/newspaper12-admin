@@ -1,39 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import styles from "./index.module.css";
 import Logo from "./Logo";
+import CheckBox from "@/components/Utils/CheckBox";
+import MyButton from "@/components/Utils/MyButton";
+import useFormState from "./hooks/useForState";
 
 const LoginScreen = () => {
-  // creating formaData instance to store login form data
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    remember: false,
-  });
-
-  // update formData with new typed text
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  // handling remember checbox
-  const handleRemember = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      remember: event.target.checked,
-    });
-  };
-
-  // handling form submit
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    /* TO DO: Login */
-  };
+  const { formData, handleChange, handleRemember, handleSubmit } =
+    useFormState();
 
   return (
     <div className="text-[var(--color-third)] bg-[var(--bg-secondary)] min-h-screen flex items-center justify-center">
@@ -47,13 +22,15 @@ const LoginScreen = () => {
               </label>
               <input
                 type="text"
-                className="border rounded-[4px] border-[var(--border-normally)] focus:shadow-[0_0_0_1px_var(--border-active)] focus:border-[var(--border-active)] outline-none p-1 text-2xl"
+                className="input"
+                style={{ padding: "4px", fontSize: "24px" }}
                 id="login-email"
                 onChange={handleChange}
                 value={formData.email}
                 name="email"
                 autoComplete="email"
                 autoFocus
+                required
               />
             </div>
             <div className="flex flex-col mb-5">
@@ -62,34 +39,24 @@ const LoginScreen = () => {
               </label>
               <input
                 type="password"
-                className="border rounded-[4px] border-[var(--border-normally)] focus:shadow-[0_0_0_1px_var(--border-active)] focus:border-[var(--border-active)] outline-none p-1 text-2xl"
-                id="login-password"
+                className="input"
+                style={{ padding: "4px", fontSize: "24px" }}
                 onChange={handleChange}
                 value={formData.password}
                 name="password"
                 autoComplete="current-password"
+                required
               />
             </div>
             <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <input
-                  className={`appearance-none w-4 h-4 mr-2 border rounded-[4px] border-[var(--border-normally)] focus:shadow-[0_0_0_1px_var(--border-active)] focus:border-[var(--border-active)] ${styles.checkbox}`}
-                  checked={formData.remember}
-                  onChange={handleRemember}
-                  type="checkbox"
-                  id="login-remember"
-                  name="remember"
-                />
-                <label
-                  htmlFor="login-remember"
-                  className="text-sm flex items-center"
-                >
-                  Remember me
-                </label>
-              </div>
-              <button type="submit" className="btn">
+              <CheckBox
+                label="Remember me"
+                onChange={handleRemember}
+                checked={formData.remember}
+              />
+              <MyButton type="submit" btntype="fill">
                 Log in
-              </button>
+              </MyButton>
             </div>
           </div>
         </form>

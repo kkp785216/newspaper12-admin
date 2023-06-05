@@ -9,6 +9,7 @@ const api_endpoints = {
   /* Auth APIs */
   AUTH_LOGIN_API: "/login",
   AUTH_REGISTER_API: "/register",
+  AUTH_REFRESH_TOKEN_API: "/refreshtoken",
 
   /* Categories APIs */
   CATEGORY_ALL_GET_API: "/categories",
@@ -19,6 +20,10 @@ const api_endpoints = {
   Tag_ALL_GET_API: "/tags",
   Tag_SINGLE_GET_API: "/tag",
   Tag_ADD_API: "/tag",
+
+  /* Image Upload */
+  UPLOAD_IMAGE: "/upload/image",
+  UPLOAD_IMAGES: "/upload/images",
 };
 
 export default api_endpoints;
