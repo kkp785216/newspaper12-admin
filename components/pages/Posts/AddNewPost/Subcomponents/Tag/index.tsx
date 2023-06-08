@@ -12,6 +12,7 @@ const Tag = () => {
       <CardWrapper>
         <Head heading="Tags" />
         <Body>
+          {/* @ts-expect-error Server Component */}
           <Tags />
           <button
             className="text-[var(--color-active3)] underline font-medium text-[13px]"

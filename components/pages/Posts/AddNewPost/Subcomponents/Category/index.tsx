@@ -12,6 +12,7 @@ const Category = () => {
       <CardWrapper>
         <Head heading="Categories" />
         <Body>
+          {/* @ts-expect-error Server Component */}
           <Categories />
           <button
             className="text-[var(--color-active3)] underline font-medium text-[13px]"

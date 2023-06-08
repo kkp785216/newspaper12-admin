@@ -1,1 +1,3 @@
 {/* @ts-expect-error Server Component */}
+
+cache: 'no-store'

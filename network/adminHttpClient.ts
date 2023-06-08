@@ -1,4 +1,5 @@
 import api_endpoints from "@/lib/ApiEndpoints";
+import { UserProfileResponse } from "@/types/Auth_APIs_Types";
 import { ApiErrorType, WithNonNullableKeys } from "@/types/Common_APIs_Types";
 import { ImageResponse } from "@/types/Image_APIs_Types";
 import type {
@@ -97,6 +98,28 @@ class AdminClient {
       url,
       method: "POST",
       data: formData,
+    });
+    return response.data;
+  }
+
+  /** get all authors */
+  public async getAllAuthors() {
+    const endpoint = api_endpoints.AUTHORS_ALL_GET_API;
+    const url = `${endpoint}`;
+    const response = await this.callBackend<UserProfileResponse[]>({
+      url,
+      method: "GET",
+    });
+    return response.data;
+  }
+
+  /** Get my profile */
+  public async getMyProfile() {
+    const endpoint = api_endpoints.USER_PROFILE_GTE_API;
+    const url = `${endpoint}`;
+    const response = await this.callBackend<UserProfileResponse>({
+      url,
+      data: { cache: "no-store" },
     });
     return response.data;
   }

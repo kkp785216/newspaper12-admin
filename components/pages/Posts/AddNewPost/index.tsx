@@ -22,6 +22,7 @@ const AddNewPost = () => {
           <Category />
           <Tag />
           <FeaturedImage />
+          {/* @ts-expect-error Server Component */}
           <Author />
           <Template />
         </Aside>

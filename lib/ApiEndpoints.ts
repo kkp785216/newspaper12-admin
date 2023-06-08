@@ -24,6 +24,11 @@ const api_endpoints = {
   /* Image Upload */
   UPLOAD_IMAGE: "/upload/image",
   UPLOAD_IMAGES: "/upload/images",
+
+  AUTHORS_ALL_GET_API: "/authors/all",
+
+  /* Users APIs */
+  USER_PROFILE_GTE_API: "/profile",
 };
 
 export default api_endpoints;

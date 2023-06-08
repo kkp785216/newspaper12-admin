@@ -1,5 +1,5 @@
-import type { CategoryAllGetResult } from "./Category_APIs_Type";
+import type { CategoryGetResult } from "./Category_APIs_Type";
 
-type TagAllGetResult = Omit<CategoryAllGetResult[0], "parent">[];
+type TagGetResult = Omit<CategoryGetResult, "parent">;
 
-export type { TagAllGetResult };
+export type { TagGetResult };

@@ -1,12 +1,14 @@
 import CheckBox from "@/components/Utils/CheckBox";
+import { categoriesApiCall } from "./pageData";
 
-const Categories = () => {
+const Categories = async () => {
+  const categories = await categoriesApiCall();
   return (
     <div className="py-3">
       <div className="space-y-1">
-        <CheckBox label="News" />
-        <CheckBox label="Blog" />
-        <CheckBox label="Featured" />
+        {categories.map((category) => (
+          <CheckBox key={category._id} label={category.name} />
+        ))}
       </div>
     </div>
   );
