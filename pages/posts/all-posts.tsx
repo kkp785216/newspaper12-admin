@@ -1,7 +1,18 @@
 import Head from "next/head";
 import AllPosts from "@pagesComps/Posts/AllPosts";
+import { GetServerSideProps } from "next";
+import {
+  DataProvider,
+  PageDataType,
+} from "@pagesComps/Posts/AllPosts/context/DataProvider";
+import { redirectToLoginPage } from "@/redux/auth/helper/redirectToLoginPage";
+import { pageDataApiCalls } from "@pagesComps/Posts/AllPosts/context/DataApiCalls";
+import { wrapper } from "@/redux/store";
 
-const Posts = () => {
+type Props = {
+  pageData: PageDataType;
+};
+const Posts = ({ pageData }: Props) => {
   return (
     <div>
       <Head>
@@ -10,9 +21,31 @@ const Posts = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AllPosts />
+      <DataProvider pageData={pageData}>
+        <AllPosts />
+      </DataProvider>
     </div>
   );
 };
+
+export const getServerSideProps: GetServerSideProps<{
+  pageData: PageDataType;
+}> = wrapper.getServerSideProps((store) => async () => {
+  /** Redirect un-authenticated user into login page */
+  const willRedirect = redirectToLoginPage(store);
+  if (willRedirect) {
+    return willRedirect;
+  }
+
+  const [articlesData] = await pageDataApiCalls();
+
+  return {
+    props: {
+      pageData: {
+        articlesData,
+      },
+    },
+  };
+});
 
 export default Posts;
