@@ -1,14 +1,13 @@
 import React from "react";
 import IconDashboard from "./assets/IconDashboard";
 import SliderMenu from "../Subcomponents/SliderMenu";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 const Dashboard = () => {
-  // router.route
-  const { route } = useRouter();
+  const pathname = usePathname();
   return (
     <SliderMenu
-      active={route === "/"}
+      active={pathname === "/"}
       href="/"
       title="Dashboard"
       MenuImage={IconDashboard}

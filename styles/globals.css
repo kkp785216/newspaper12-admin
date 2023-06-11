@@ -3,28 +3,33 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --bg-primary: #1d2327;
-        --bg-shadow: #2c3338;
-        --bg-secondary: #f0f0f1;
-        --bg-normally: #ffffff;
+  :root {
+      --bg-primary: #1d2327;
+      --bg-secondary: #f0f0f1;
+      --bg-shadow: #2c3338;
+      --bg-normally: #ffffff;
+      --bg-lite: #f6f7f7;
+      --bg-btnhover: #f0f0f1;
 
-        --color-primary: #f0f0f1;
-        --color-heading: #1d2327;
-        --color-secondary: #2c3338;
-        --color-third: #3c434a;
-        --color-active: #135e96;
-        --color-active2: #72aee6;
-        --color-active3: #2271b1;
-        --color-dim: #50575e;
-        --color-normally: #000000;
+      --color-primary: #f0f0f1;
+      --color-secondary: #2c3338;
+      --color-heading: #1d2327;
+      --color-third: #3c434a;
+      --color-active: #135e96;
+      --color-active2: #72aee6;
+      --color-active3: #2271b1;
+      --color-dim: #50575e;
+      --color-normally: #000000;
+      --color-form-caption: #646970;
+      --color-input: #8c8f94;
 
-        --svg-primary: #f0f6fcb3;
+      --svg-primary: #f0f6fcb3;
 
-        --border-normally: #8c8f94;
-        --border-active: #2271b1;
-        --border-disable: #dcdcde;
-        --border-hover: #0a4b78;
-        --border-dim: #c3c4c7;
-    }
+      --border-normally: #8c8f94;
+      --border-active: #2271b1;
+      --border-disable: #dcdcde;
+      --border-hover: #0a4b78;
+      --border-dim: #c3c4c7;
+      --border-focus: #3582c4;
+  }
 }

@@ -1,8 +1,10 @@
+"use client";
+
 import Header from "./Subcomponents/Navbar";
 import Footer from "./Subcomponents/Footer";
 import Sidebar from "./Subcomponents/SideBar";
-import { useAppSelector } from "redux/hooks";
-import LoginScreen from "components/Auth/Login";
+import { useAppSelector } from "@/redux/hooks";
+import LoginScreen from "@/components/Auth/Login";
 import useSelectNavbarHeight from "./hooks/useSelectNavbarHeight";
 
 type Props = {

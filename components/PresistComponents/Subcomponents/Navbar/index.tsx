@@ -1,3 +1,5 @@
+"use client";
+
 import NavbarContent from "./Subcomponents";
 import useNavbarHeightUpdater from "./hooks/useNavbarHeightUpdater";
 

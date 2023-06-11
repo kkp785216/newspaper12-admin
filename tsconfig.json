@@ -4,8 +4,9 @@
     "paths": {
       "@network/*": ["network/*"],
       "@pagesComps/*": ["components/pages/*"],
-      "@types/*": ["types/*"],
-      "@lib/*": ["lib/*"]
+      "@type/*": ["type/*"],
+      "@lib/*": ["lib/*"],
+      "@/*": ["./*"],
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

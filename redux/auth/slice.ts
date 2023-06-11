@@ -1,5 +1,12 @@
 import {
+  REFRESH_TOKEN_COOKIE_VAR_NAME,
+  deleteCookie,
+  setCookie,
+} from "@/utils/manageCookie";
+import { tokenManager } from "@network/accessTokenManager";
+import {
   ActionCreatorWithPayload,
+  createAsyncThunk,
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
@@ -44,6 +51,49 @@ export const authSlice = createSlice({
       );
   },
 });
+
+/**
+ * this function is a action which can used to login customer into app
+ * @param accessToken login response tokem
+ * @param refreshToken login resosponse refreshToken
+ * @param expiry login response expiry
+ * @returns a action to set accessToken and refreshToken into app on required place
+ */
+export const setAccessToken = (
+  accessToken: string,
+  refreshToken: string,
+  expiry: number
+) => {
+  return createAsyncThunk(`${SLICE_NAME}/setAccessToken`, (_, { dispatch }) => {
+    setCookie(REFRESH_TOKEN_COOKIE_VAR_NAME, refreshToken, expiry);
+    tokenManager.setAccessToken(accessToken);
+    dispatch(setAuth(accessToken));
+  })();
+};
+
+/**
+ * this function is a action which can used to login customer into app on server side
+ * @param accessToken login response tokem
+ * @returns a action to set accessToken
+ */
+export const setAccessTokenServerSide = (accessToken: string) => {
+  return createAsyncThunk(`${SLICE_NAME}/setAccessToken`, (_, { dispatch }) => {
+    tokenManager.setAccessToken(accessToken);
+    dispatch(setAuth(accessToken));
+  })();
+};
+
+/**
+ * action for logut user
+ */
+export const removeAccessToken = createAsyncThunk(
+  `${SLICE_NAME}/removeAccessToken`,
+  (_, { dispatch }) => {
+    deleteCookie(REFRESH_TOKEN_COOKIE_VAR_NAME);
+    tokenManager.setAccessToken(undefined);
+    dispatch(setAuth(null));
+  }
+);
 
 export const { setAuth } = authSlice.actions;
 

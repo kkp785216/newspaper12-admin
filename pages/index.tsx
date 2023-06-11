@@ -1,4 +1,7 @@
+import { redirectToLoginPage } from "@/redux/auth/helper/redirectToLoginPage";
+import { wrapper } from "@/redux/store";
 import Dashboard from "@pagesComps/Dashboard";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 
 //using google font
@@ -17,3 +20,19 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps =
+  // eslint-disable-next-line @typescript-eslint/require-await
+  wrapper.getServerSideProps((store) => async () => {
+    /** Redirect un-authenticated user into login page */
+    const willRedirect = redirectToLoginPage(store);
+    if (willRedirect) {
+      return willRedirect;
+    }
+
+    return {
+      props: {
+        pageData: {},
+      },
+    };
+  });
