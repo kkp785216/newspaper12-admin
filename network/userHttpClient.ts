@@ -1,7 +1,7 @@
 import api_endpoints from "@/lib/ApiEndpoints";
 import { UserProfileResponse } from "@type/Auth_APIs_Types";
 import { ApiErrorType, WithNonNullableKeys } from "@type/Common_APIs_Types";
-import { ImageResponse } from "@type/Image_APIs_Types";
+
 import type {
   AxiosError,
   AxiosHeaders,
@@ -17,7 +17,7 @@ type AxiosRequestConfigWithAttemptCount = AxiosRequestConfig & {
 const MAX_TRIES = 3;
 const INVALID_ACCESS_TOKEN_ERROR_CODE = "ESEC0003";
 
-class AdminClient {
+class UserClient {
   private readonly axiosInstance: AxiosInstance;
   private accessToken?: string;
 
@@ -77,46 +77,6 @@ class AdminClient {
     }
   }
 
-  /**
-   * @returns image response with success message and download url
-   */
-  public async uploadImage(formData: FormData) {
-    const endpoint = api_endpoints.UPLOAD_IMAGE;
-    const url = `${endpoint}`;
-    const response = await this.callBackend<ImageResponse>({
-      url,
-      method: "POST",
-      data: formData,
-    });
-    return response.data;
-  }
-
-  /**
-   * @returns image response with success message and download url
-   */
-  public async uploadImages(formData: FormData) {
-    const endpoint = api_endpoints.UPLOAD_IMAGES;
-    const url = `${endpoint}`;
-    const response = await this.callBackend<ImageResponse[]>({
-      url,
-      method: "POST",
-      data: formData,
-    });
-    return response.data;
-  }
-
-  /** get all authors */
-  public async getAllAuthors() {
-    const endpoint = api_endpoints.AUTHORS_ALL_GET_API;
-    const url = `${endpoint}`;
-    const response = await this.callBackend<UserProfileResponse[]>({
-      url,
-      method: "GET",
-      data: { cache: "no-store" },
-    });
-    return response.data;
-  }
-
   /** Get my profile */
   public async getMyProfile() {
     const endpoint = api_endpoints.USER_PROFILE_GTE_API;
@@ -151,6 +111,6 @@ function getCurrAttemptCount(config: AxiosRequestConfigWithAttemptCount) {
   return newCount;
 }
 
-const adminClient = new AdminClient(tokenManager);
+const userClient = new UserClient(tokenManager);
 
-export { adminClient };
+export { userClient };

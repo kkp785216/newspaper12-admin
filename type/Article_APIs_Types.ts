@@ -1,12 +1,12 @@
-import type { CategoryAllGetResult } from "./Category_APIs_Type";
-import type { TagAllGetResult } from "./Tag_APIs_Types";
+import type { CategoryGetResult } from "./Category_APIs_Type";
+import type { TagGetResult } from "./Tag_APIs_Types";
 import type { UserProfileResponse } from "./Auth_APIs_Types";
 
 type ArticleAllGetResult = {
   articles: {
     _id: string;
-    categories: CategoryAllGetResult;
-    tags: TagAllGetResult;
+    categories: CategoryGetResult[];
+    tags: TagGetResult[];
     title: string;
     description: string;
     author: UserProfileResponse;

@@ -1,10 +1,16 @@
-import { adminClient } from "@/network/adminHttpClient";
 import {
   REFRESH_TOKEN_COOKIE_VAR_NAME,
   deleteCookie,
   setCookie,
 } from "@/utils/manageCookie";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { tokenManager } from "@network/accessTokenManager";
+import {
+  ActionCreatorWithPayload,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 const SLICE_NAME = "auth";
 
@@ -28,6 +34,22 @@ export const authSlice = createSlice({
       state.accessToken = action.payload;
     },
   },
+
+  // Special reducer for hydrating the state. Special case for next-redux-wrapper
+  extraReducers(builder) {
+    builder // thunk fulfill/reject logic is handled within the thunk, as logic is reusable
+      .addCase(
+        HYDRATE as unknown as ActionCreatorWithPayload<{
+          [SLICE_NAME]: AuthState;
+        }>,
+        (state, action) => {
+          return {
+            ...state,
+            ...action.payload[SLICE_NAME],
+          };
+        }
+      );
+  },
 });
 
 /**
@@ -44,7 +66,7 @@ export const setAccessToken = (
 ) => {
   return createAsyncThunk(`${SLICE_NAME}/setAccessToken`, (_, { dispatch }) => {
     setCookie(REFRESH_TOKEN_COOKIE_VAR_NAME, refreshToken, expiry);
-    adminClient.accessToken = accessToken;
+    tokenManager.setAccessToken(accessToken);
     dispatch(setAuth(accessToken));
   })();
 };
@@ -56,7 +78,7 @@ export const setAccessToken = (
  */
 export const setAccessTokenServerSide = (accessToken: string) => {
   return createAsyncThunk(`${SLICE_NAME}/setAccessToken`, (_, { dispatch }) => {
-    adminClient.accessToken = accessToken;
+    tokenManager.setAccessToken(accessToken);
     dispatch(setAuth(accessToken));
   })();
 };
@@ -68,7 +90,7 @@ export const removeAccessToken = createAsyncThunk(
   `${SLICE_NAME}/removeAccessToken`,
   (_, { dispatch }) => {
     deleteCookie(REFRESH_TOKEN_COOKIE_VAR_NAME);
-    adminClient.accessToken = undefined;
+    tokenManager.setAccessToken(undefined);
     dispatch(setAuth(null));
   }
 );

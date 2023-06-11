@@ -1,10 +1,21 @@
-const AddTags = () => {
+"use client";
+
+import { useState } from "react";
+import AddNewTag from "./AddNewTag/indexd";
+
+const AddTag = () => {
+  const [isAddTagOpen, setIsAddTagOpen] = useState(false);
   return (
-    <div className="space-y-3.5 py-5">
-      <input type="text" className="input" />
-      <button className="btnLite">Add New Tag</button>
-    </div>
+    <>
+      <button
+        className="text-[var(--color-active3)] underline font-medium text-[13px]"
+        onClick={() => setIsAddTagOpen(!isAddTagOpen)}
+      >
+        + Add New Tag
+      </button>
+      {isAddTagOpen && <AddNewTag />}
+    </>
   );
 };
 
-export default AddTags;
+export default AddTag;

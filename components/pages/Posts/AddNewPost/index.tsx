@@ -1,5 +1,6 @@
 import Author from "./Subcomponents/Author";
 import Category from "./Subcomponents/Category";
+import Description from "./Subcomponents/Description";
 import FeaturedImage from "./Subcomponents/FeaturedImage";
 import Heading from "./Subcomponents/Heading";
 import Status from "./Subcomponents/Status";
@@ -16,13 +17,13 @@ const AddNewPost = () => {
       <Wrapper>
         <Main>
           <Title />
+          <Description />
         </Main>
         <Aside>
           <Status />
           <Category />
           <Tag />
           <FeaturedImage />
-          {/* @ts-expect-error Server Component */}
           <Author />
           <Template />
         </Aside>

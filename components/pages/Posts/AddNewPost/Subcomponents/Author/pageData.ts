@@ -1,6 +1,6 @@
 import { adminClient } from "@/network/adminHttpClient";
 
-const allAuthorsApicall = async () => {
+const allAuthorsApiCall = async () => {
   try {
     const res = await adminClient.getAllAuthors();
     return res;
@@ -9,7 +9,7 @@ const allAuthorsApicall = async () => {
   }
 };
 
-const logedInUser = async () => {
+const logedInUserApiCall = async () => {
   try {
     const res = await adminClient.getMyProfile();
     return res;
@@ -18,4 +18,4 @@ const logedInUser = async () => {
   }
 };
 
-export { allAuthorsApicall, logedInUser };
+export { allAuthorsApiCall, logedInUserApiCall };
