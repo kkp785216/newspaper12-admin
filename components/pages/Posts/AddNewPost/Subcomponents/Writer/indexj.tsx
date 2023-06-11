@@ -1,5 +1,3 @@
-// "use client"
-
 // import { CKEditor } from '@ckeditor/ckeditor5-react';
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import { useState } from 'react';
@@ -26,3 +24,11 @@
 // }
 
 // export default Writer;
+
+import React from "react";
+
+const Writers = () => {
+  return <div>Writers</div>;
+};
+
+export default Writers;
