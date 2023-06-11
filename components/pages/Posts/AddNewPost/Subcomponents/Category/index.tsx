@@ -1,25 +1,20 @@
-"use client";
-
+import { DataContext } from "../../_context/DataContext";
 import { CardWrapper, Body, Head } from "../Subcomponents/CardLayout";
-import Categories from "./Categories";
 import AddCategory from "./AddCategory";
-import { useState } from "react";
+import Categories from "./Categories";
+import { useContext } from "react";
 
 const Category = () => {
-  const [isAddCategoryOpen, setIsAddCategoyOpen] = useState(false);
+  const {
+    categoriesData: { categories },
+  } = useContext(DataContext);
   return (
     <div>
       <CardWrapper>
         <Head heading="Categories" />
         <Body>
-          <Categories />
-          <button
-            className="text-[var(--color-active3)] underline font-medium text-[13px]"
-            onClick={() => setIsAddCategoyOpen(!isAddCategoryOpen)}
-          >
-            + Add New Category
-          </button>
-          {isAddCategoryOpen && <AddCategory />}
+          <Categories categories={categories} />
+          <AddCategory categories={categories} />
         </Body>
       </CardWrapper>
     </div>

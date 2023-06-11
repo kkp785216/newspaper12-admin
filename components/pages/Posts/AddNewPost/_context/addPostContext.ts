@@ -1,21 +1,6 @@
-import { ChangeEvent, createContext } from "react";
+import { createContext } from "react";
+import { AddPostContextValueType } from "./Provider";
 
-type AddPostContextType = {
-  formData: {
-    title: string;
-    slug: string;
-    description: string;
-  };
-  formDataDispatch: (event: ChangeEvent<HTMLInputElement>) => void;
-};
-
-const AddPostContext = createContext<AddPostContextType>({
-  formData: {
-    title: "",
-    slug: "",
-    description: "",
-  },
-  formDataDispatch: () => null,
-});
+const AddPostContext = createContext({} as AddPostContextValueType);
 
 export { AddPostContext };

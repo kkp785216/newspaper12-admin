@@ -1,4 +1,4 @@
-import { AppState } from "@/redux/store";
+import { AppState } from "redux/store";
 
 const getNavbarHeight = (state: AppState) => state.ui.navbarHeight;
 

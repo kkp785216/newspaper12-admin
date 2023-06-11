@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, ChangeEvent } from "react";
 import { adminClient } from "@/network/adminHttpClient";
 import {

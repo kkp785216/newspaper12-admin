@@ -1,18 +1,18 @@
-import Link from "next/link";
-import { getAllArticlesData } from "./pageData";
+// import Link from "next/link";
+// import { getAllArticlesData } from "./pageData";
 
-const AllPosts = async () => {
-  const { articles } = await getAllArticlesData();
+const AllPosts = () => {
+  // const { articles } = await getAllArticlesData();
   return (
     <div>
-      {articles.map((e) => (
+      {/* {articles.map((e) => (
         <>
           <Link key={e.url} href={`/posts/add-new`}>
             {e.title}
           </Link>
           <br />
         </>
-      ))}
+      ))} */}
     </div>
   );
 };

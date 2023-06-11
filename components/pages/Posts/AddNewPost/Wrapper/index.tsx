@@ -1,5 +1,9 @@
 const Main = ({ children }: { children: React.ReactNode }) => {
-  return <main className="w-3/4 flex-initial">{children}</main>;
+  return (
+    <main className="w-3/4 flex-initial [&>*:not(:last-child)]:mb-5">
+      {children}
+    </main>
+  );
 };
 
 const Aside = ({ children }: { children: React.ReactNode }) => {

@@ -1,12 +1,25 @@
-const AddCategory = () => {
+"use client";
+
+import { useState } from "react";
+import AddNewCategory from "./AddNewCategory/indexd";
+import { CategoryGetResult } from "@type/Category_APIs_Type";
+
+type Props = {
+  categories: CategoryGetResult[];
+};
+
+const AddCategory = ({ categories }: Props) => {
+  const [isAddCategoryOpen, setIsAddCategoyOpen] = useState(false);
   return (
-    <div className="space-y-3.5 py-5">
-      <input type="text" className="input" />
-      <select className="input select">
-        <option value="0">— Parent Category —</option>
-      </select>
-      <button className="btnLite">Add New Category</button>
-    </div>
+    <>
+      <button
+        className="text-[var(--color-active3)] underline font-medium text-[13px]"
+        onClick={() => setIsAddCategoyOpen(!isAddCategoryOpen)}
+      >
+        + Add New Category
+      </button>
+      {isAddCategoryOpen && <AddNewCategory categories={categories} />}
+    </>
   );
 };
 
