@@ -1,18 +1,21 @@
-// import Link from "next/link";
-// import { getAllArticlesData } from "./pageData";
+import Link from "next/link";
+import { useContext } from "react";
+import { DataContext } from "./context/DataContext";
 
 const AllPosts = () => {
-  // const { articles } = await getAllArticlesData();
+  const {
+    articlesData: { articles },
+  } = useContext(DataContext);
   return (
     <div>
-      {/* {articles.map((e) => (
+      {articles.articles.map((article) => (
         <>
-          <Link key={e.url} href={`/posts/add-new`}>
-            {e.title}
+          <Link key={article.url} href={`/posts/add-new`}>
+            {article.title}
           </Link>
           <br />
         </>
-      ))} */}
+      ))}
     </div>
   );
 };
